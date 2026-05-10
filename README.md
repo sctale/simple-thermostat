@@ -21,7 +21,7 @@ Home Assistant 2024.9.0 或更高版本（推荐 HASS 2026.3+）
 
 1. 确保 HACS 已安装
 2. **HACS → 集成 → 右上角 `⋮` → 自定义仓库**
-3. 仓库填入：`https://github.com/sctale/hass-xiaokongtiao`
+3. 仓库填入：`https://github.com/sctale/little-aircon`
 4. 类别选「插件」，点添加
 5. 搜索「simple-thermostat」找到「小空调」，点击安装
 
@@ -29,7 +29,7 @@ Home Assistant 2024.9.0 或更高版本（推荐 HASS 2026.3+）
 
 ```yaml
 resources:
-  - url: /hacsfiles/simple-thermostat/simple-thermostat.js
+  - url: /hacsfiles/little-aircon/little-aircon.js
     type: module
 ```
 
@@ -37,13 +37,13 @@ resources:
 
 ### 方式二：手动安装
 
-1. 从 GitHub 下载本仓库 `simple-thermostat.js`（进入 [dist/](https://github.com/sctale/hass-xiaokongtiao/tree/master/dist) 文件夹，右键点击文件 → 复制链接）
+1. 从 GitHub 下载本仓库 `little-aircon.js`（进入 [dist/](https://github.com/sctale/little-aircon/tree/master/dist) 文件夹，右键点击文件 → 复制链接）
 2. 保存到 Home Assistant 配置目录的 `www` 文件夹下
 3. 在 Lovelace 资源配置：
 
 ```yaml
 resources:
-  - url: /local/simple-thermostat.js?v=1
+  - url: /local/little-aircon.js?v=1
     type: module
 ```
 
@@ -52,16 +52,16 @@ resources:
 在 Lovelace 卡片中添加：
 
 ```yaml
-type: custom:simple-xiaokongdiao
+type: custom:little-aircon
 entity: climate.hvac
 ```
 
-> **注意**：卡类型名是 `simple-xiaokongdiao`（与原版 `simple-thermostat` 不同），两个版本可以同时安装，不会冲突。
+> **注意**：卡类型名是 `little-aircon`（与原版 `simple-thermostat` 不同），两个版本可以同时安装，不会冲突。
 
 ### 基础示例
 
 ```yaml
-type: custom:simple-xiaokongdiao
+type: custom:little-aircon
 entity: climate.hvac
 header:
   name: 我的空调
@@ -70,7 +70,7 @@ header:
 ### 紧凑模式（隐藏控制按钮）
 
 ```yaml
-type: custom:simple-xiaokongdiao
+type: custom:little-aircon
 entity: climate.hvac
 layout:
   step: row
@@ -81,7 +81,7 @@ control: false
 ### 带传感器
 
 ```yaml
-type: custom:simple-xiaokongdiao
+type: custom:little-aircon
 entity: climate.hvac
 sensors:
   - entity: sensor.humidity
@@ -112,7 +112,7 @@ sensors:
 
 | 对比项 | 原版 | 小空调 |
 |--------|------|----------|
-| 卡类型名 | `simple-thermostat` | `simple-xiaokongdiao` |
+| 卡类型名 | `simple-thermostat` | `little-aircon` |
 | lit 版本 | lit-element 2.x | lit 3.x |
 | HASS 兼容性 | ~2025.x | 2026.x+ |
 | 语言 | 英文 | 中文（默认） |
@@ -121,7 +121,7 @@ sensors:
 
 ## 更新日志
 
-### v3.0.5
+### v3.0.9
 
 - 全面升级至 lit v3，兼容 Home Assistant 2026.x
 - 升级 TypeScript 5.3 + Rollup 4.x

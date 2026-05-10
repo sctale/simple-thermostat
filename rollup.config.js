@@ -42,7 +42,7 @@ export default [
   {
     input: 'src/simple-thermostat.ts',
     output: {
-      file: 'dist/simple-thermostat.js',
+      file: 'dist/little-aircon.js',
       format: 'es',
       name: 'SimpleThermostat',
     },
@@ -54,7 +54,7 @@ export default [
   {
     input: 'src/simple-thermostat.ts',
     output: {
-      file: 'dist/simple-thermostat.debug.js',
+      file: 'dist/little-aircon.debug.js',
       format: 'es',
       name: 'SimpleThermostat',
     },

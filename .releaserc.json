@@ -9,7 +9,7 @@
         "assets": [
           {
             "path": "dist/simple-thermostat.js",
-            "label": "simple-thermostat.js"
+            "label": "little-aircon.js"
           }
         ]
       }

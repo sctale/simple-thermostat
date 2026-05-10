@@ -10,8 +10,8 @@
     globalThis.process = { env:env };
 })();
 
-var name = "simple-xiaokongdiao";
-var version = "3.0.7";
+var name = "little-aircon";
+var version = "3.0.9";
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -367,7 +367,7 @@ const OptionsDecimals = [0, 1];
 const OptionsStepSize = [0.5, 1];
 const OptionsStepLayout = ['column', 'row'];
 const includeDomains = ['climate'];
-const GithubReadMe = 'https://github.com/sctale/hass-xiaokongtiao/blob/master/README.md';
+const GithubReadMe = 'https://github.com/sctale/little-aircon/blob/master/README.md';
 const stub = {
     header: {},
     layout: { mode: {} },
