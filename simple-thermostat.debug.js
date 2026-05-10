@@ -1640,7 +1640,7 @@ console.info(`%c${name}: ${version}`, 'font-weight: bold');
 window.customCards = window.customCards || [];
 window.customCards.push({
     type: name,
-    name: '小空调 Simple Thermostat ZH',
+    name: '小空调',
     preview: false,
     description: 'Home Assistant 温控卡片（lit v3 / HASS 2026.x 兼容，中文界面）',
 });

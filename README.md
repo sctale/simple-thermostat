@@ -1,4 +1,4 @@
-# 小空调（Simple Thermostat ZH）
+# 小空调
 
 小空调是 [simple-thermostat](https://github.com/nervetattoo/simple-thermostat) 的中文本地化分支，基于原版 v2.2.2 升级而来，兼容 Home Assistant 2026.x。
 
