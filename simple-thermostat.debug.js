@@ -1318,7 +1318,6 @@ class SimpleThermostat extends i$1 {
         };
     }
     updated() {
-        super.connectedCallback();
         const patchHass = Array.from(this.renderRoot.querySelectorAll('[with-hass]'));
         for (const child of Array.from(patchHass)) {
             Array.from(child.attributes).forEach((attr) => {
