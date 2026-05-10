@@ -152,7 +152,6 @@ export default class SimpleThermostat extends LitElement {
   }
 
   updated() {
-    super.connectedCallback()
     const patchHass: Array<HANode> = Array.from(
       this.renderRoot.querySelectorAll('[with-hass]')
     )
