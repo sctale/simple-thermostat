@@ -1,5 +1,5 @@
 {
-  "name": "Simple Thermostat",
-  "homeassistant": "0.84.0",
+  "name": "小空调",
+  "homeassistant": "2024.9.0",
   "render_readme": true
 }
