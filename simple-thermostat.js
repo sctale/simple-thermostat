@@ -250,7 +250,7 @@ ha-switch {
   flex: 1;
   padding-right: 4px;
 }
-`;function pt(t,e,i,s={}){s=s||{},i=null==i?{}:i;const n=new Event(e,{bubbles:void 0===s.bubbles||s.bubbles,cancelable:Boolean(s.cancelable),composed:void 0===s.composed||s.composed});return n.detail=i,t.dispatchEvent(n),n}!function(t,e){void 0===e&&(e={});var i=e.insertAt;if(t&&"undefined"!=typeof document){var s=document.head||document.getElementsByTagName("head")[0],n=document.createElement("style");n.type="text/css","top"===i&&s.firstChild?s.insertBefore(n,s.firstChild):s.appendChild(n),n.styleSheet?n.styleSheet.cssText=t:n.appendChild(document.createTextNode(t))}}(ut);const ft=[0,1],gt=[.5,1],mt=["column","row"],vt=["climate"],yt={header:{},layout:{mode:{}}};class _t extends at{constructor(){super(...arguments),this.config={}}static getConfigElement(){return window.document.createElement(`${t}-editor`)}setConfig(t){this.config=t||{...yt}}_openLink(){window.open("https://github.com/sctale/hass-xiaokongtiao/blob/master/README.md")}render(){return this.hass?L`
+`;function pt(t,e,i,s={}){s=s||{},i=null==i?{}:i;const n=new Event(e,{bubbles:void 0===s.bubbles||s.bubbles,cancelable:Boolean(s.cancelable),composed:void 0===s.composed||s.composed});return n.detail=i,t.dispatchEvent(n),n}!function(t,e){void 0===e&&(e={});var i=e.insertAt;if(t&&"undefined"!=typeof document){var s=document.head||document.getElementsByTagName("head")[0],n=document.createElement("style");n.type="text/css","top"===i&&s.firstChild?s.insertBefore(n,s.firstChild):s.appendChild(n),n.styleSheet?n.styleSheet.cssText=t:n.appendChild(document.createTextNode(t))}}(ut);const ft=[0,1],gt=[.5,1],mt=["column","row"],vt=["climate"],yt={header:{},layout:{mode:{}}};class _t extends at{constructor(){super(...arguments),this.config={}}static getStubConfig(){return{...yt}}static getConfigElement(){return window.document.createElement(`${t}-editor`)}setConfig(t){this.config=t||{...yt}}_openLink(){window.open("https://github.com/sctale/hass-xiaokongtiao/blob/master/README.md")}render(){return this.hass?L`
       <div class="card-config">
         <div class="overall-config">
           <div class="side-by-side">
@@ -298,13 +298,13 @@ ha-switch {
               <paper-input
                 label="名称（可选）"
                 .value=${this.config.header?.name||""}
-                configValue="header.name"
+                .configValue="header.name"
                 @value-changed=${this.valueChanged}
               ></paper-input>
               <ha-icon-input
                 label="图标（可选）"
                 .value=${this.config.header?.icon||""}
-                configValue="header.icon"
+                .configValue="header.icon"
                 @value-changed=${this.valueChanged}
               ></ha-icon-input>
             </div>
@@ -313,14 +313,14 @@ ha-switch {
                 label="开关实体（可选）"
                 .hass=${this.hass}
                 .value=${this.config?.header?.toggle?.entity||""}
-                configValue="header.toggle.entity"
+                .configValue="header.toggle.entity"
                 @change=${this.valueChanged}
                 allow-custom-entity
               ></ha-entity-picker>
               <paper-input
                 label="开关标签"
                 .value=${this.config?.header?.toggle?.name||""}
-                configValue="header.toggle.name"
+                .configValue="header.toggle.name"
                 @value-changed=${this.valueChanged}
               ></paper-input>
             </div>
@@ -330,7 +330,7 @@ ha-switch {
             <paper-input
               label="占位文本（可选）"
               .value=${this.config.fallback||""}
-              configValue="fallback"
+              .configValue="fallback"
               @value-changed=${this.valueChanged}
             ></paper-input>
           </div>
@@ -338,7 +338,7 @@ ha-switch {
           <div class="side-by-side">
             <paper-dropdown-menu
               label="小数位数（可选）"
-              configValue="decimals"
+              .configValue="decimals"
               @value-changed=${this.valueChanged}
               class="dropdown"
             >
@@ -353,7 +353,7 @@ ha-switch {
             <paper-input
               label="单位（可选）"
               .value=${this.config.unit||""}
-              configValue="unit"
+              .configValue="unit"
               @value-changed=${this.valueChanged}
             ></paper-input>
           </div>
@@ -361,7 +361,7 @@ ha-switch {
           <div class="side-by-side">
             <paper-dropdown-menu
               label="布局方向（可选）"
-              configValue="layout.step"
+              .configValue="layout.step"
               @value-changed=${this.valueChanged}
               class="dropdown"
             >
@@ -375,7 +375,7 @@ ha-switch {
 
             <paper-dropdown-menu
               label="步进值（可选）"
-              configValue="step_size"
+              .configValue="step_size"
               @value-changed=${this.valueChanged}
               class="dropdown"
             >

@@ -378,6 +378,10 @@ class SimpleThermostatEditor extends i$1 {
         super(...arguments);
         this.config = {};
     }
+    // HASS Lovelace UI 打开编辑器时需要的默认配置
+    static getStubConfig() {
+        return { ...stub };
+    }
     static getConfigElement() {
         return window.document.createElement(`${name}-editor`);
     }
@@ -438,13 +442,13 @@ class SimpleThermostatEditor extends i$1 {
               <paper-input
                 label="名称（可选）"
                 .value=${this.config.header?.name || ''}
-                configValue="header.name"
+                .configValue="header.name"
                 @value-changed=${this.valueChanged}
               ></paper-input>
               <ha-icon-input
                 label="图标（可选）"
                 .value=${this.config.header?.icon || ''}
-                configValue="header.icon"
+                .configValue="header.icon"
                 @value-changed=${this.valueChanged}
               ></ha-icon-input>
             </div>
@@ -453,14 +457,14 @@ class SimpleThermostatEditor extends i$1 {
                 label="开关实体（可选）"
                 .hass=${this.hass}
                 .value=${this.config?.header?.toggle?.entity || ''}
-                configValue="header.toggle.entity"
+                .configValue="header.toggle.entity"
                 @change=${this.valueChanged}
                 allow-custom-entity
               ></ha-entity-picker>
               <paper-input
                 label="开关标签"
                 .value=${this.config?.header?.toggle?.name || ''}
-                configValue="header.toggle.name"
+                .configValue="header.toggle.name"
                 @value-changed=${this.valueChanged}
               ></paper-input>
             </div>
@@ -470,7 +474,7 @@ class SimpleThermostatEditor extends i$1 {
             <paper-input
               label="占位文本（可选）"
               .value=${this.config.fallback || ''}
-              configValue="fallback"
+              .configValue="fallback"
               @value-changed=${this.valueChanged}
             ></paper-input>
           </div>
@@ -478,7 +482,7 @@ class SimpleThermostatEditor extends i$1 {
           <div class="side-by-side">
             <paper-dropdown-menu
               label="小数位数（可选）"
-              configValue="decimals"
+              .configValue="decimals"
               @value-changed=${this.valueChanged}
               class="dropdown"
             >
@@ -493,7 +497,7 @@ class SimpleThermostatEditor extends i$1 {
             <paper-input
               label="单位（可选）"
               .value=${this.config.unit || ''}
-              configValue="unit"
+              .configValue="unit"
               @value-changed=${this.valueChanged}
             ></paper-input>
           </div>
@@ -501,7 +505,7 @@ class SimpleThermostatEditor extends i$1 {
           <div class="side-by-side">
             <paper-dropdown-menu
               label="布局方向（可选）"
-              configValue="layout.step"
+              .configValue="layout.step"
               @value-changed=${this.valueChanged}
               class="dropdown"
             >
@@ -515,7 +519,7 @@ class SimpleThermostatEditor extends i$1 {
 
             <paper-dropdown-menu
               label="步进值（可选）"
-              configValue="step_size"
+              .configValue="step_size"
               @value-changed=${this.valueChanged}
               class="dropdown"
             >
