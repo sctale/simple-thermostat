@@ -11,7 +11,7 @@
 })();
 
 var name = "simple-xiaokongdiao";
-var version = "3.0.5";
+var version = "3.0.7";
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1296,12 +1296,12 @@ class SimpleThermostat extends i$1 {
         }
     }
     set hass(hass) {
-        if (!this.config.entity)
+        this._hass = hass;
+        if (!this.config?.entity)
             return;
         const entity = hass.states[this.config.entity];
-        if (typeof entity === undefined)
+        if (!entity)
             return;
-        this._hass = hass;
         if (this.entity !== entity) {
             this.entity = entity;
         }
