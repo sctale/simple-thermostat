@@ -1,17 +1,14 @@
+import { LooseObject } from '../types'
+
 export interface Service {
   domain: string
   service: string
-  data?: {
-    [key: string]: string
-  }
+  data?: LooseObject
 }
 
-export default function parseServie(config: false | Service): Service {
-  if (!config) {
-    return {
-      domain: 'climate',
-      service: 'set_temperature',
-    }
+export default function parseService(service: false | Service): Service {
+  if (service === false) {
+    return { domain: 'climate', service: 'set_temperature' }
   }
-  return config
+  return service
 }

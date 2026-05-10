@@ -1,16 +1,16 @@
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import json from '@rollup/plugin-json'
-import { terser } from 'rollup-plugin-terser'
 import commonjs from '@rollup/plugin-commonjs'
-import minifyHTML from 'rollup-plugin-minify-html-literals'
 import postCSS from 'rollup-plugin-postcss'
 import postCSSLit from 'rollup-plugin-postcss-lit'
 import postCSSPresetEnv from 'postcss-preset-env'
-import dts from 'rollup-plugin-dts'
 import inject from 'rollup-plugin-inject-process-env'
+import terser from '@rollup/plugin-terser'
 
-const shared = (DEBUG) => [
+const production = process.env.NODE_ENV === 'production'
+
+const shared = (debug) => [
   resolve({
     browser: true,
   }),
@@ -18,7 +18,7 @@ const shared = (DEBUG) => [
   json(),
   inject(
     {
-      DEBUG,
+      DEBUG: debug ? 'true' : 'false',
     },
     { exclude: '**/*.css' }
   ),
@@ -29,7 +29,6 @@ const shared = (DEBUG) => [
         stage: 1,
         features: {
           'nesting-rules': true,
-          'custom-media-query': true,
         },
       }),
     ],
@@ -49,18 +48,8 @@ export default [
     },
     plugins: [
       ...shared(false),
-      minifyHTML({
-        options: {
-          shouldMinifyCSS: () => false,
-          minifyCSS: false,
-        },
-      }),
-      terser({
-        output: {
-          comments: false,
-        },
-      }),
-    ],
+      production ? terser({ output: { comments: false } }) : null,
+    ].filter(Boolean),
   },
   {
     input: 'src/simple-thermostat.ts',
@@ -71,9 +60,4 @@ export default [
     },
     plugins: shared(true),
   },
-  // {
-  //   input: './dist/config/card.d.ts',
-  //   output: [{ file: 'dist/st.d.ts', format: 'es' }],
-  //   plugins: [dts()],
-  // },
 ]

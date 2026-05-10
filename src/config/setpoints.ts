@@ -26,6 +26,7 @@ export default function parseSetpoints(
       }
     }, {})
   }
+
   const entityType = getEntityType(attributes)
   if (entityType === DUAL) {
     return {
@@ -33,6 +34,7 @@ export default function parseSetpoints(
       target_temp_high: attributes.target_temp_high,
     }
   }
+
   return {
     temperature: attributes.temperature,
   }

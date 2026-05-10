@@ -14,7 +14,7 @@ export interface Fault {
   hide_inactive?: boolean
 }
 
-export const STATE_ICONS = {
+export const STATE_ICONS: Record<string, string> = {
   auto: 'mdi:radiator',
   cooling: 'mdi:snowflake',
   fan: 'mdi:fan',
@@ -23,7 +23,7 @@ export const STATE_ICONS = {
   off: 'mdi:radiator-off',
 }
 
-export const MODE_ICONS = {
+export const MODE_ICONS: Record<string, string> = {
   auto: 'hass:autorenew',
   cool: 'hass:snowflake',
   dry: 'hass:water-percent',
@@ -31,10 +31,14 @@ export const MODE_ICONS = {
   heat_cool: 'hass:autorenew',
   heat: 'hass:fire',
   off: 'hass:power',
+  // 新增 swing_horizontal 模式
+  swing_horizontal: 'mdi:fan',
+  swing: 'mdi:fan-sync',
 }
 
 type Icon = string | false | LooseObject
 type Name = string | false
+
 export interface HeaderConfig {
   name?: Name
   icon?: Icon
@@ -53,16 +57,17 @@ export interface Toggle {
   entity: HAState
   label: string
 }
+
 export type ToggleConfig = { entity: string; name?: string | boolean }
 
 export default function parseHeaderConfig(
   config: false | HeaderConfig,
-  entity,
+  entity: any,
   hass: HASS
 ): false | HeaderData {
   if (config === false) return false
 
-  let name
+  let name: Name
   if (typeof config?.name === 'string') {
     name = config.name
   } else if (config?.name === false) {
@@ -84,8 +89,8 @@ export default function parseHeaderConfig(
   }
 }
 
-function parseToggle(config: ToggleConfig, hass): Toggle {
-  const entity: HAState = hass.states[config.entity]
+function parseToggle(config: ToggleConfig, hass: HASS): Toggle {
+  const entity: HAState = hass.states![config.entity]
 
   let label = ''
   if (config?.name === true) {
@@ -102,7 +107,7 @@ function parseFaults(config: Array<Fault>, hass: HASS) {
     return config.map(({ entity, ...rest }: Fault) => {
       return {
         ...rest,
-        state: hass.states[entity],
+        state: hass.states![entity],
         entity,
       }
     })

@@ -1,7 +1,16 @@
-import { html } from 'lit-html'
+import { html, nothing } from 'lit'
 import formatNumber from '../formatNumber'
 import renderInfoItem from './infoItem'
 import { wrapSensors } from './templated'
+
+// 传感器区域的中文标签
+const ZH_SENSOR_LABELS: Record<string, string> = {
+  current_humidity: '当前湿度',
+  current_temperature: '当前温度',
+  humidity: '湿度',
+  temperature: '温度',
+  // fallback
+}
 
 export default function renderSensors({
   _hide,
@@ -19,13 +28,44 @@ export default function renderSensors({
   } = entity
 
   const showLabels = config?.layout?.sensors?.labels ?? true
-  let stateString = localize(state, 'component.climate.state._.')
-  if (action) {
-    stateString = [
-      localize(action, 'state_attributes.climate.hvac_action.'),
-      ` (${stateString})`,
-    ].join('')
+
+  // 获取中文状态名
+  const getZhState = (s: string): string => {
+    const map: Record<string, string> = {
+      off: '关闭',
+      heat: '制热',
+      cool: '制冷',
+      auto: '自动',
+      dry: '除湿',
+      fan_only: '送风',
+      heat_cool: '冷热',
+      idle: '待机',
+      heating: '加热中',
+      cooling: '制冷中',
+      drying: '除湿中',
+      fan: '送风中',
+    }
+    return map[s] ?? s
   }
+
+  // 获取中文动作描述
+  const getZhAction = (a: string): string => {
+    const map: Record<string, string> = {
+      idle: '待机',
+      heating: '正在制热',
+      cooling: '正在制冷',
+      drying: '正在除湿',
+      fan: '正在送风',
+      off: '已关闭',
+    }
+    return map[a] ?? a
+  }
+
+  let stateString = getZhState(state)
+  if (action) {
+    stateString = `${getZhAction(action)} (${stateString})`
+  }
+
   const sensorHtml = [
     renderInfoItem({
       hide: _hide.temperature,
@@ -33,7 +73,7 @@ export default function renderSensors({
       hass,
       details: {
         heading: showLabels
-          ? config?.label?.temperature ?? localize('ui.card.climate.currently')
+          ? config?.label?.temperature ?? '当前温度'
           : false,
       },
     }),
@@ -43,8 +83,7 @@ export default function renderSensors({
       hass,
       details: {
         heading: showLabels
-          ? config?.label?.state ??
-            localize('ui.panel.lovelace.editor.card.generic.state')
+          ? config?.label?.state ?? '运行状态'
           : false,
       },
     }),
@@ -62,5 +101,5 @@ export default function renderSensors({
     }) || null),
   ].filter((it) => it !== null)
 
-  return wrapSensors(config, sensorHtml)
+  return html`${wrapSensors(config, sensorHtml)}`
 }

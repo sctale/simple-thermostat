@@ -8,6 +8,8 @@ export enum MODES {
   FAN = 'fan',
   PRESET = 'preset',
   SWING = 'swing',
+  // 新增水平摆风模式支持
+  SWING_HORIZONTAL = 'swing_horizontal',
 }
 
 export type ModeValue = {
@@ -16,28 +18,18 @@ export type ModeValue = {
   include?: boolean
 }
 
-/**
- * Represents the available mode values for a mode
- *
- */
 export type ModeControlObject = Record<string, boolean | ModeValue> & {
   _name: string
   _hide_when_off: boolean
 }
 
-/**
- * Modes (hvac, fac, preset, swing)
- * that might exist as attributes on a climate entity.
- * Modes can be set to a value based on a list of options
- * that are provided in the attributes of the entity.
- *
- */
 export type ModeControlValue = boolean | ModeControlObject
 type ModeControl = {
   hvac: ModeControlValue
   fan: ModeControlValue
   preset: ModeControlValue
   swing: ModeControlValue
+  swing_horizontal: ModeControlValue
 }
 
 interface CardConfig {
