@@ -1,8 +1,8 @@
-# 简宜恒温（Simple Thermostat ZH）
+# 小空调（Simple Thermostat ZH）
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-简宜恒温是 [simple-thermostat](https://github.com/nervetattoo/simple-thermostat) 的中文本地化分支，专为 Home Assistant 2026.x 用户打造。
+小空调是 [simple-thermostat](https://github.com/nervetattoo/simple-thermostat) 的中文本地化分支，专为 Home Assistant 2026.x 用户打造。
 
 在原版基础上全面升级：lit v3 兼容、中文界面、新增摆风模式支持。
 
@@ -25,7 +25,7 @@ Home Assistant 0.84 或更高版本（推荐 HASS 2026.3+）
 ### 方式一：HACS（推荐）
 
 1. 确保 HACS 已安装
-2. 在 HACS 搜索「simple-thermostat-zh」或「简宜恒温」
+2. 在 HACS 搜索「simple-thermostat-zh」或「小空调」
 3. 点击安装
 4. 在 Lovelace 资源中添加：
 
@@ -113,7 +113,7 @@ sensors:
 
 ## 与原版（nervetattoo/simple-thermostat）的主要区别
 
-| 对比项 | 原版 | 简宜恒温 |
+| 对比项 | 原版 | 小空调 |
 |--------|------|----------|
 | lit 版本 | lit-element 2.x | lit 3.x |
 | HASS 兼容性 | ~2025.x | 2026.x+ |
