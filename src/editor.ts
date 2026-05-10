@@ -36,13 +36,8 @@ export default class SimpleThermostatEditor extends LitElement {
 
   static styles = styles
 
-  // HASS Lovelace UI 打开编辑器时需要的默认配置
   static getStubConfig() {
     return { ...stub }
-  }
-
-  static getConfigElement() {
-    return window.document.createElement(`${name}-editor`)
   }
 
   setConfig(config: CardConfig) {
@@ -71,66 +66,37 @@ export default class SimpleThermostatEditor extends LitElement {
             ></ha-entity-picker>
           </div>
 
-          <ha-formfield label="显示标题栏？">
-            <ha-switch
-              .checked=${this.config.header !== false}
-              @change=${this.toggleHeader}
-            ></ha-switch>
-          </ha-formfield>
-          <ha-formfield label="显示模式名称？">
-            <ha-switch
-              .checked=${this.config?.layout?.mode?.names !== false}
-              configValue="layout.mode.names"
-              @change=${this.valueChanged}
-            ></ha-switch>
-          </ha-formfield>
-          <ha-formfield label="显示模式图标？">
-            <ha-switch
-              .checked=${this.config?.layout?.mode?.icons !== false}
-              configValue="layout.mode.icons"
-              @change=${this.valueChanged}
-            ></ha-switch>
-          </ha-formfield>
-          <ha-formfield label="显示模式分类标题？">
-            <ha-switch
-              .checked=${this.config?.layout?.mode?.headings !== false}
-              configValue="layout.mode.headings"
-              @change=${this.valueChanged}
-            ></ha-switch>
-          </ha-formfield>
+          <div class="side-by-side">
+            <paper-input
+              label="名称（可选）"
+              .value=${this.config.header?.name || ''}
+              .configValue="header.name"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+            <paper-input
+              label="图标（可选）"
+              .value=${this.config.header?.icon || ''}
+              .configValue="header.icon"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+          </div>
 
-          ${this.config.header !== false ? html`
-            <div class="side-by-side">
-              <paper-input
-                label="名称（可选）"
-                .value=${this.config.header?.name || ''}
-                .configValue="header.name"
-                @value-changed=${this.valueChanged}
-              ></paper-input>
-              <ha-icon-input
-                label="图标（可选）"
-                .value=${this.config.header?.icon || ''}
-                .configValue="header.icon"
-                @value-changed=${this.valueChanged}
-              ></ha-icon-input>
-            </div>
-            <div class="side-by-side">
-              <ha-entity-picker
-                label="开关实体（可选）"
-                .hass=${this.hass}
-                .value=${this.config?.header?.toggle?.entity || ''}
-                .configValue="header.toggle.entity"
-                @change=${this.valueChanged}
-                allow-custom-entity
-              ></ha-entity-picker>
-              <paper-input
-                label="开关标签"
-                .value=${this.config?.header?.toggle?.name || ''}
-                .configValue="header.toggle.name"
-                @value-changed=${this.valueChanged}
-              ></paper-input>
-            </div>
-          ` : ''}
+          <div class="side-by-side">
+            <ha-entity-picker
+              label="开关实体（可选）"
+              .hass=${this.hass}
+              .value=${this.config?.header?.toggle?.entity || ''}
+              .configValue="header.toggle.entity"
+              @change=${this.valueChanged}
+              allow-custom-entity
+            ></ha-entity-picker>
+            <paper-input
+              label="开关标签"
+              .value=${this.config?.header?.toggle?.name || ''}
+              .configValue="header.toggle.name"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+          </div>
 
           <div class="side-by-side">
             <paper-input
@@ -227,10 +193,5 @@ export default class SimpleThermostatEditor extends LitElement {
       }
     }
     fireEvent(this, 'config-changed', { config: copy })
-  }
-
-  toggleHeader(ev: any) {
-    this.config.header = ev.target.checked ? {} : false
-    fireEvent(this, 'config-changed', { config: this.config })
   }
 }
