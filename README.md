@@ -21,7 +21,7 @@ Home Assistant 2024.9.0 或更高版本（推荐 HASS 2026.3+）
 
 1. 确保 HACS 已安装
 2. **HACS → 集成 → 右上角 `⋮` → 自定义仓库**
-3. 仓库填入：`https://github.com/sctale/simple-thermostat`
+3. 仓库填入：`https://github.com/sctale/hass-xiaokongtiao`
 4. 类别选「插件」，点添加
 5. 搜索「simple-thermostat」找到「小空调」，点击安装
 
@@ -37,7 +37,7 @@ resources:
 
 ### 方式二：手动安装
 
-1. 从 GitHub 下载本仓库 `simple-thermostat.js`（进入 [dist/](https://github.com/sctale/simple-thermostat/tree/master/dist) 文件夹，右键点击文件 → 复制链接）
+1. 从 GitHub 下载本仓库 `simple-thermostat.js`（进入 [dist/](https://github.com/sctale/hass-xiaokongtiao/tree/master/dist) 文件夹，右键点击文件 → 复制链接）
 2. 保存到 Home Assistant 配置目录的 `www` 文件夹下
 3. 在 Lovelace 资源配置：
 

@@ -21,7 +21,7 @@ const OptionsDecimals = [0, 1]
 const OptionsStepSize = [0.5, 1]
 const OptionsStepLayout = ['column', 'row']
 const includeDomains = ['climate']
-const GithubReadMe = 'https://github.com/sctale/simple-thermostat/blob/master/README.md'
+const GithubReadMe = 'https://github.com/sctale/hass-xiaokongtiao/blob/master/README.md'
 
 const stub: any = {
   header: {},
