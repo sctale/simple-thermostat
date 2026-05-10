@@ -9,7 +9,7 @@ console.info(`%c${CARD_NAME}: ${version}`, 'font-weight: bold')
 ;(window as any).customCards = (window as any).customCards || []
 ;(window as any).customCards.push({
   type: CARD_NAME,
-  name: 'Simple Thermostat',
+  name: '简宜恒温 Simple Thermostat ZH',
   preview: false,
-  description: 'A different take on the thermostat card',
+  description: 'Home Assistant 温控卡片（lit v3 / HASS 2026.x 兼容，中文界面）',
 })

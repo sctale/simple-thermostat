@@ -1,19 +1,60 @@
-# Lovelace simple thermostat card
+# 简宜恒温（Simple Thermostat ZH）
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-A different take on the thermostat card for Home Assistant Lovelace UI.
-The aim is to provide a card with simpler interactions that are easier to use and take up less space, as well as provide more modularity to tweak the card. For example the abiltity to embed sensor values that are relevant to your thermostat (like humidity, energy usage, hours on +++).
+简宜恒温是 [simple-thermostat](https://github.com/nervetattoo/simple-thermostat) 的中文本地化分支，专为 Home Assistant 2026.x 用户打造。
 
-<a href="https://www.buymeacoffee.com/nervetattoo"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=nervetattoo&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+在原版基础上全面升级：lit v3 兼容、中文界面、新增摆风模式支持。
 
-![Example thermostat](https://github.com/nervetattoo/simple-thermostat/raw/master/thermostat-card.png)
+![预览](https://github.com/nervetattoo/simple-thermostat/raw/master/thermostat-card.png)
 
-## Compact mode
+## 功能特点
 
-![Compact configuration](https://github.com/nervetattoo/simple-thermostat/raw/master/simple-thermostat-compact.png)
+- **中文界面**：模式名称（制热 / 制冷 / 风速 / 自动 / 除湿 / 摆风）、传感器标签、编辑器全部中文
+- **lit v3**：兼容 Home Assistant 2026.x 及以上版本
+- **更小更简洁**：交互简洁、占用空间小
+- **模块化**：支持嵌入传感器数据（湿度、能耗、运行时长等）
+- **新支持**：`swing_horizontal` 水平摆风模式（HASS 2026.x 新增）
 
-Hide everything but sensors and temperature control:
+## 安装要求
+
+Home Assistant 0.84 或更高版本（推荐 HASS 2026.3+）
+
+## 安装方式
+
+### 方式一：HACS（推荐）
+
+1. 确保 HACS 已安装
+2. 在 HACS 搜索「simple-thermostat-zh」或「简宜恒温」
+3. 点击安装
+4. 在 Lovelace 资源中添加：
+
+```yaml
+resources:
+  - url: /hacsfiles/simple-thermostat-zh/simple-thermostat.js
+    type: module
+```
+
+### 方式二：手动安装
+
+1. 从 [Releases](https://github.com/sctale/simple-thermostat/releases) 下载最新版 `simple-thermostat.js`
+2. 保存到 `configuration/www` 目录
+3. 在 Lovelace 资源配置：
+
+```yaml
+resources:
+  - url: /local/simple-thermostat.js?v=1
+    type: module
+```
+
+## 基础配置示例
+
+```yaml
+type: custom:simple-thermostat
+entity: climate.hvac
+```
+
+### 紧凑模式（隐藏控制按钮）
 
 ```yaml
 type: custom:simple-thermostat
@@ -24,297 +65,74 @@ header: false
 control: false
 ```
 
-## Note about 2.0 release
+## 完整配置参数
 
-The 2.0 release is most likely a breaking change for the majority of users.
-Make sure you read the release notes and inspect the new configuration format.
-It offers more flexibility and features as well as a number of bug fixes.
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `entity` | string | 温控实体 ID **（必填）** |
+| `header` | false / object | 标题栏配置（见下方） |
+| `setpoints` | false / object | 温度设定点配置 |
+| `control` | false / string[] / object | 控制模式配置 |
+| `sensors` | false / array | 传感器列表（v2/v3格式） |
+| `layout.step` | row / column | 温度调节按钮排列方向 |
+| `layout.mode.names` | boolean | 是否显示模式名称 |
+| `layout.mode.icons` | boolean | 是否显示模式图标 |
+| `layout.mode.headings` | boolean | 是否显示模式分类标题 |
+| `layout.sensors.type` | list / table | 传感器渲染方式 |
+| `layout.sensors.labels` | boolean | 是否显示传感器标签 |
+| `service` | object | 自定义服务调用 |
+| `unit` | string / bool | 温度单位（false 隐藏） |
+| `decimals` | number | 小数位数（0 或 1） |
+| `step_size` | number | 每次调节步进值（默认 0.5） |
+| `fallback` | string | 无数据时显示的占位文本 |
 
-## Requirements
-
-Home Assistant 0.84 or higher
-
-## Installation
-
-1. Install via [HACS](https://hacs.xyz/).
-2. Add to resources:
-   ```yaml
-   url: /hacsfiles/simple-thermostat/simple-thermostat.js
-   type: module
-   ```
-
-<details>
-   <summary>Manual install</summary>
-1. Download the `simple-thermostat.js` from the [latest release](https://github.com/nervetattoo/simple-thermostat/releases/latest) and store it in your `configuration/www` folder.
-   _Previously you could download the source file from Github but starting from the 0.14 release that is no longer possible. If you try to do so it will crash_
-2. Configure Lovelace to load the card:
-
-```yaml
-resources:
-  - url: /local/simple-thermostat.js?v=1
-    type: module
-```
-
-</details>
-
-## Available configuration options:
-
-- `entity` _string_: The thermostat entity id **required**
-- `header` _false|Header object_: See [section](#header-config) about header config
-- `setpoints` _false|Setpoints object_: See [section](#setpoints-config) about setpoints config
-- `layout` _Layout object_:
-  - `step` _row|column_: Where to render the setpoint up/down buttons
-  - `mode` _object_: Disable elements for all modes
-    - `names` _boolean_
-    - `icons` _boolean_
-    - `headings` _boolean_
-  - `sensors`: _object_
-    - `type`: _list|table_: How to render the sensors
-    - `labels`: _boolean_: Whether to show labels/headings or not. Hiding here overrides hiding under root level `sensors` config
-- `service` _object_: Must specify both domain+service if overriding
-  - `domain` _string_: Override the service call domain
-  - `service` _string_: Override the service call name
-  - `data` _object_: Send extra data with the service call
-- `unit` _string|bool_: Override the unit to display. Set to false to hide unit
-- `decimals` _number_: Specify number of decimals to use: 1 or 0
-- `fallback` _string_: Specify a text to display if a valid set point can't be determined. Defaults to `N/A`
-- `step_size` _number_: Override the default 0.5 step size for increasing/decreasing the temperature
-- `label` _object_: Override untranslated labels
-  - `temperature`: _string_ Override Temperature label
-  - `state`: _string_ Override State label
-- `hide` _object_: Control specifically information fields to show. Defaults to showing everything
-  - `temperature`: _bool_ (Default to `false`)
-  - `state`: _bool_ (Default to `false`)
-- `control` _object|array_ (From 0.27)
-  - `hvac|fan|preset|swing` _object|bool_: The key of the mode type (hvac, preset, fan, swing)
-    - `_name` _string_: Override the name of the mode type
-    - `_hide_when_off` _bool_: Hides the mode type selection row when the entity is off. Defaults to false shown
-    - `{mode}` _string_: Name of mode type to control
-      - `name` _string|bool_: Specify a custom name or set to `false` to show only the icon
-      - `icon` _string|bool_: Specify a custom icon or set to `false` to not show icon
-- `sensors` _array|false_
-  - `entity` _string_: A sensor value entity id
-  - `name` _string_: Specify a sensor name to use instead of the default friendly_name
-  - `icon` _string_: Specify an icon to use instead of a name
-  - `attribute` _string_: The key for an attribute to use instead of state. If this sensor has no entity it will use the main entity's attributes
-  - `unit` _string_: When specifying an attribute you can manually set the unit to display
-  - `decimals` _number_: If you know your sensors has a numeric value you can round it to a number of decimals.
-  - `type` _relativetime_: Special data types that result in special handling.
-
-## Header config
-
-> New in 2.0. Old ways of defining toggle_entity, faults, name and icon are no longer supported
-
-Hiding the entire header is done with `header: false`
-If you pass an object you can pass any of the following keys.
-Example:
+## 标题栏配置（header）
 
 ```yaml
 header:
-  name: Overriden name
-  icon: mdi:sofa
-  toggle:
-    entity: switch.light
-    name: Light
-  faults:
-    - entity: switch.light
+  name: 我的空调        # 自定义名称（留空则用法兰名）
+  icon: mdi:air-conditioner  # 自定义图标
+  toggle:               # 可选：附带一个开关实体
+    entity: switch.plug
+    name: 电源开关
 ```
 
-Full header config spec:
-
-- `name` _string_: Override the card name. Default is to use the friendly_name of the thermostat provided
-- `toggle` _object_: An entity id to create a toggle in the header for. This gives the option to control a separate entity which can be related to the thermostat entity (like a switch, or input_boolean)
-  - `entity` _string_: The entity id to create the header for
-  - `name` _string|bool_: Set the label to be shown to the left of the toggle. Set to true to show the friendly name of the toggle_entity
-- `faults` _array|false_: Show fault conditions as active/inactive icons in the header
-  - `entity` _string_: A binary sensor entity id
-  - `icon` _string_: Override the entity icon
-  - `hide_inactive` _bool_: Hide the fault icon when inactive (Default to `false`)
-- `icon` _string|object_: Show an icon next to the card name. You can also pass an object to specify specific icons. Current value is taken from attributes.hvac_action when available, or state as fallback.
-  - `auto`: _string_ Use this icon for hvac_action auto. Default mdi:radiator
-  - `cooling`: _string_ Use this icon for hvac_action cooling. Default mdi:snowflake
-  - `fan`: _string_ Use this icon for hvac_action fan. Default mdi:fan
-  - `heating`: _string_ Use this icon for hvac_action heating. Default mdi:radiator
-  - `idle`: _string_: Use this icon for hvac_action idle. Default mdi:radiator-disabled
-  - `"off"`: _string_ Use this icon for hvac_action off. Default mdi:radiator-off
-  - `auto`: _string_ Use this icon for state auto. Default hass:autorenew
-  - `cool`: _string_ Use this icon for state cooling. Default hass:snowflake
-  - `dry`: _string_: Use this icon for state dry. Default hass:water-percent
-  - `fan_only`: _string_ Use this icon for state fan. Default hass:fan
-  - `heat`: _string_ Use this icon for state heat. Default hass:autorenew
-  - `heat_cool`: _string_: Use this icon for state heat_cool. Default hass:fire
-  - `"off"`: _string_ Use this icon for state off. Default hass:power
-
-## Setpoints config
-
-> New in 2.0. Old ways of hiding setpoints is deprecated
-
-If you specify setpoints manually you must include all setpoints you want included.
-Normally there are only two possibilities here; `temperature` or `target_temp_high` + `target_temp_low`. Single or dual thermostats. But, theoretically there could be multiple setpoints and this aims to support any permutation.
-The new feature in 2.0 is the ability to hide one of the two setpoints for dual thermostats.
-
-To manually specify to use the `temperature` attribute as a setpoint you do:
+## 传感器配置示例（v3）
 
 ```yaml
-setpoints:
-  temperature:
+type: custom:simple-thermostat
+entity: climate.hvac
+sensors:
+  - entity: sensor.humidity
+    label: 室内湿度
+    template: "{{state.attributes.current_humidity}}%"
+  - entity: sensor.power_consumption
+    label: 今日能耗
+    template: "{{state|kWh}}"
 ```
 
-For dual thermostats:
+## 与原版（nervetattoo/simple-thermostat）的主要区别
 
-```yaml
-setpoints:
-  target_temp_low:
-  target_temp_high:
-```
+| 对比项 | 原版 | 简宜恒温 |
+|--------|------|----------|
+| lit 版本 | lit-element 2.x | lit 3.x |
+| HASS 兼容性 | ~2025.x | 2026.x+ |
+| 语言 | 英文 | 中文（默认） |
+| swing_horizontal | ❌ | ✅ |
+| 构建工具 | Rollup 2.x | Rollup 4.x |
+| TypeScript | 4.2 | 5.3 |
 
-To hide one of the dual setpoints:
+## 更新日志
 
-```yaml
-setpoints:
-  target_temp_low:
-    hide: true
-  target_temp_high:
-```
+### v3.0.0
 
-For climate devices supporting more setpoints you can include as many as you like.
-Automatic detection of set points only work for the single/dual cases.
+- 全面升级至 lit v3，兼容 Home Assistant 2026.x
+- 升级 TypeScript 5.3 + Rollup 4.x
+- 中文本地化（模式名、标签、编辑器）
+- 新增 `swing_horizontal`（水平摆风）模式支持
 
-## Usage of the control config
+---
 
-In 0.27, in order to both support changes in the climate domain and to support controlling all modes like hvac, preset, fan and swing modes the old `modes` configuration have been removed and replaced with a `control` config.
+<a href="https://www.buymeacoffee.com/nervetattoo"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=nervetattoo&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
 
-The `control` config is most easily explained using a few examples as it supports both a simplified definition using just an array to list the types of modes to control. By default, with no config, it will show `hvac` and `preset` (if the entity supports it). You can replicate the default manually like this:
-
-```yaml
-control:
-  - hvac
-  - preset
-```
-
-This will list all modes for both types. You can get more fine grained control by switching to an object format and taking control of specific modes:
-
-```yaml
-control:
-  preset:
-    away: true
-    none:
-      name: Not set
-```
-
-What is worth noticing is that there is no merging of the default any more, so with this config you will not get `hvac_mode` displayed. If you still want it to display like default you need to set:
-
-```yaml
-control:
-  preset:
-    away: true
-    none:
-      name: Not set
-  hvac: true
-```
-
-Please note that you need to quote off/on mode keys to not have them interprented as true/false.
-
-```yaml
-control:
-  hvac:
-    off: will not work
-    "off": works
-```
-
-## Example usage:
-
-```yaml
-cards:
-  - type: 'custom:simple-thermostat'
-    entity: climate.my_room
-    step_size: 1
-    sensors:
-      - entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
-      - entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
-        name: Energy today
-      - attribute: min_temp
-        name: Min temp
-    header:
-      faults:
-        - entity: binary_sensor.my_room_communications_fault
-        - entity: binary_sensor.my_room_low_battery_fault
-          icon: mdi:battery-low
-      toggle:
-        entity: switch.pump_relay
-    control:
-      hvac:
-        some_mode: false
-        another_mode: false
-        'off':
-          name: Make it cold
-          icon: false
-        'on':
-          name: false
-          icon: mdi:whitewalker
-```
-
-```yaml
-cards:
-  - type: 'custom:simple-thermostat'
-    entity: climate.my_room
-    step_size: 1
-    sensors:
-      - entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
-    header:
-      toggle:
-        entity: switch.pump_relay
-        name: Control the pump
-```
-
-## CSS vars for theming
-
-The card uses the following CSS variables:
-
-| Var name                    | Default value                           | Usage                                                |
-| --------------------------- | --------------------------------------- | ---------------------------------------------------- |
-| --st-font-size-xl           | var(--paper-font-display3\_-_font-size) | Used for target temperature                          |
-| --st-font-size-l            | var(--paper-font-display2\_-_font-size) | Unused at the moment                                 |
-| --st-font-size-m            | var(--paper-font-title\_-_font-size)    | Used for target temperature unit                     |
-| --st-font-size-title        | var(--ha-card-header-font-size, 24      | Font size for card heading                           |
-| --st-font-size-sensors      | var(--paper-font-subhead\_-_font-size)  | Font size for sensors                                |
-| --st-spacing                | 4px                                     | Base unit for spacing. Used in multiples many places |
-| --st-mode-active-background | var(--primary-color)                    | Background color for active mode button              |
-| --st-mode-active-color      | var(--text-primary-color, #fff)         | Text color for active mode button                    |
-| --st-mode-background        | #dff4fd                                 | Background color for inactive mode button            |
-| --st-toggle-label-color     | var(--text-primary-color)               | Text color for toggle label                          |
-| --st-font-size-toggle-label | var(--paper-font-subhead\_-_font-size)  | Font size for toggle label                           |
-| --st-fault-inactive-color   | var(--secondary-background-color)       | Icon color for inactive faults                       |
-| --st-fault-active-color     | var(--accent-color)                     | Icon color for active faults                         |
-
-These variables can be changed globally in the current theme or on each card via card-mod.
-
-### Example using custom theme
-
-Example that makes everything smaller and more compact except sensors that gets blown up completely.
-
-```yaml
-example-theme:
-  st-font-size-xl: 24px
-  st-font-size-m: 20px
-  st-font-size-title: 20px
-  st-font-size-sensors: 30px
-  st-spacing: 2px
-```
-
-### Example using card-mod
-
-Same example as above, but will only apply to a single card.
-
-```yaml
-type: 'custom:simple-thermostat'
-style: |
-  ha-card {
-    --st-font-size-xl: 24px;
-    --st-font-size-m: 20px;
-    --st-font-size-title: 20px;
-    --st-font-size-sensors: 30px;
-    --st-spacing: 2px;
-  }
-  ...
-```
+（原版作者：Raymond Julin @ nervetattoo）
