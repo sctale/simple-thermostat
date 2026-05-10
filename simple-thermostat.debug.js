@@ -11,7 +11,7 @@
 })();
 
 var name = "simple-xiaokongdiao";
-var version = "3.0.0";
+var version = "3.0.202605101341";
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

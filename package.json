@@ -1,6 +1,6 @@
 {
   "name": "simple-xiaokongdiao",
-  "version": "3.0.0",
+  "version": "3.0.202605101341",
   "description": "小空调卡片 - Home Assistant Lovelace 温控卡片（lit v3 / HASS 2026.x 兼容，中文本地化）",
   "main": "dist/simple-thermostat.js",
   "repository": "git@github.com:sctale/hass-xiaokongtiao.git",
@@ -48,7 +48,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "cross-env NODE_ENV=production rollup -c",
+    "build": "node scripts/bump-version.js && cross-env NODE_ENV=production rollup -c",
     "postversion": "npm run build",
     "dev": "concurrently 'npm:dev:*'",
     "dev:build": "tsc --watch",
