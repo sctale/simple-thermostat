@@ -1,5 +1,7 @@
 {
   "name": "小空调",
   "homeassistant": "2024.9.0",
-  "render_readme": true
+  "render_readme": true,
+  "content_in_root": true,
+  "filename": "simple-thermostat.js"
 }
